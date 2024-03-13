@@ -29,13 +29,13 @@ float xorf_uv(in vec2 uv) {
   return 1.0 - step_.x - step_.y + 2.0 * step_.x * step_.y;
 }
 
-void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+void main(void) {
   // st coordiante space
   vec2 drift = ANIMATION_SPEED * unitvec(SLIDE_ANGLE_RADIANS) * iTime;
-  vec2 st = (fragCoord.xy + drift) / min(iResolution.x, iResolution.y);
-  st = tile(st, 8.0);
+  vec2 st = (gl_FragCoord.xy + drift) / min(iResolution.x, iResolution.y);
+  st = tile(st, 6.0);
   vec2 uv = 2.0 * st - 1.0;
   float grey = xorf_uv(uv);
   vec3 color = vec3(grey, grey, grey);
-  fragColor = vec4(color, 1.0);
+  gl_FragColor = vec4(color, 1.0);
 }
